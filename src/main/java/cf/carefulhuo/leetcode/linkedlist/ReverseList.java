@@ -3,7 +3,7 @@ package cf.carefulhuo.leetcode.linkedlist;
 /**
  * 反转链表
  */
-public class reverseList {
+public class ReverseList {
 
     private static ListNode head;
 

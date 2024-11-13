@@ -5,7 +5,7 @@ import java.util.Stack;
 /**
  * 删除链表的倒数第 N 个节点
  */
-public class removeNthFromEnd {
+public class RemoveNthFromEnd {
 
     private static ListNode head;
 
