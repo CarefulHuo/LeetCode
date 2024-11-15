@@ -6,13 +6,14 @@ package cf.carefulhuo.leetcode.sort;
  */
 public class FindKthLargest {
     public static void main(String[] args) {
-        int[] nums = {3,2,3,1,2,4,5,5,6};
+        int[] nums = {3, 2, 3, 1, 2, 4, 5, 5, 6};
+//        int[] nums = {3, 2, 1, 5, 6, 4};
         int k = 4;
-        System.out.println(findKthLargest2(nums, k));
+        System.out.println(findKthLargest3(nums, k));
     }
 
     /**
-     * 常规的快速排序，无法搞定这个题目，因为快速排序最坏的时间复杂度为O(n^2)
+     * 使用常规的快速排序，将数组排序完成之后，直接返回第k个元素的方式不行，会超时，因为快速排序的最坏时间复杂度是O(n^2)
      *
      * @param nums
      * @param k
@@ -30,6 +31,14 @@ public class FindKthLargest {
         quickSort(nums, q + 1, r);
     }
 
+    /**
+     * 此处是按照降序排列，大数在左边，小数在右边
+     *
+     * @param nums
+     * @param p
+     * @param r
+     * @return
+     */
     private static int partition(int[] nums, int p, int r) {
         int pivot = nums[r];
         int i = p;
@@ -45,6 +54,26 @@ public class FindKthLargest {
         nums[i] = nums[r];
         nums[r] = tmp;
         return i;
+    }
+
+    public static int findKthLargest3(int[] nums, int k) {
+        return quickSort2(nums, 0, nums.length - 1, k);
+    }
+
+    private static int quickSort2(int[] nums, int p, int r, int k) {
+        if (p > r) return 0;
+        // 找到 q，此时 q 左边比 q 大，q 右边比 q 小
+        int q = partition(nums, p, r);
+        if ((q + 1) == k) {
+            // 此处返回的正好是第 K 大的元素
+            return nums[q];
+        } else if ((q + 1) < k) {
+            // 说明要找的元素在右半边，继续递归
+            return quickSort2(nums, q + 1, r, k);
+        } else {
+            // 说明要找的元素在左半边，继续递归
+            return quickSort2(nums, p, q - 1, k);
+        }
     }
 
     /**
